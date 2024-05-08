@@ -1,5 +1,5 @@
 export const clearLocalStorage = () => {
-  localStorage.removeItem('id')
-  localStorage.removeItem('token')
-  localStorage.removeItem('_id')
+  localStorage.removeItem('id_pr13Jroa')
+  localStorage.removeItem('token_pr13Jroa')
+  localStorage.removeItem('_id_pr13Jroa')
 }

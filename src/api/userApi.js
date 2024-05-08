@@ -1,4 +1,5 @@
 import { path } from '../constants/pathBackend'
+import { clearLocalStorage } from '../utils/logoutFunction'
 import { getCartBooks } from './cartApi'
 
 export const login = async (userName, pass) => {
@@ -91,7 +92,7 @@ export const getUserByUserId = async (id) => {
   const data = await fetch(path + '/api/v1/users/byUserId/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'GET'
   })
@@ -118,7 +119,7 @@ export const putUserData = async (id, values) => {
   const data = await fetch(path + '/api/v1/users/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'PUT',
     body: JSON.stringify({
@@ -147,4 +148,15 @@ export const ModifyUserData = async (id, values) => {
     return { msg: 'Error al Modificar los datos del usuario', status: 400 }
   }
   return { msg: 'Datos mofificados', status: 200 }
+}
+
+export const checkLocalStorage = async (id, setIsLogin) => {
+  const resUser = await getUserByUserId(id)
+
+  if (resUser.id) {
+    console.log(resUser.id)
+    setIsLogin(true)
+  } else {
+    clearLocalStorage()
+  }
 }

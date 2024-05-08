@@ -34,8 +34,14 @@ const FormProfile = () => {
   }, [])
 
   const getuserDetails = async () => {
-    const res = await getUserDetailsPurchase(localStorage.getItem('id'))
-    setValue('name', res.user.name)
+    const res = await getUserDetailsPurchase(
+      localStorage.getItem('id_pr13Jroa')
+    )
+    if (res.user.name) {
+      setValue('name', res.user.name)
+    } else {
+      setValue('name', res.user.userName)
+    }
     setValue('lastname', res.user.lastName1)
     setValue('lastname2', res.user.lastName2)
     setValue('telephone', res.user.telephone)
@@ -52,7 +58,10 @@ const FormProfile = () => {
     modifyEdit()
     mofifyBtnName()
     if (!edit) {
-      const res = await ModifyUserData(localStorage.getItem('id'), values)
+      const res = await ModifyUserData(
+        localStorage.getItem('id_pr13Jroa'),
+        values
+      )
       if (res.status === 200) {
         setMsg(res.msg)
       } else {
@@ -97,25 +106,8 @@ const FormProfile = () => {
             id='lastname'
             type='text'
             placeholder='Primer apellido'
-            {...register('lastname', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('lastname')}
           ></input>
-          {formState.errors.lastname ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.lastname.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>{' '}
         <CustomDiv dir={'column'} w={'250px'} gap={'var(--rtc-gap-xs)'}>
           <Label>Segundo apellido</Label>
@@ -136,25 +128,8 @@ const FormProfile = () => {
             id='telephone'
             type='text'
             placeholder='Telefono'
-            {...register('telephone', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('telephone')}
           ></input>
-          {formState.errors.telephone ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.telephone.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>
         <CustomDiv dir={'column'} w={'380px'} gap={'var(--rtc-gap-xs)'}>
           <Label>Calle</Label>
@@ -163,25 +138,8 @@ const FormProfile = () => {
             id='street'
             type='text'
             placeholder='Calle'
-            {...register('street', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('street')}
           ></input>
-          {formState.errors.street ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.street.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>
       </CustomDiv>
       <CustomDiv w={'100%'}>
@@ -192,25 +150,8 @@ const FormProfile = () => {
             id='number'
             type='text'
             placeholder='Numero'
-            {...register('number', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('number')}
           ></input>
-          {formState.errors.number ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.number.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>
         <CustomDiv dir={'column'} w={'250px'} gap={'var(--rtc-gap-xs)'}>
           <Label>Planta</Label>
@@ -241,25 +182,8 @@ const FormProfile = () => {
             id='postalCode'
             type='text'
             placeholder='Código postal'
-            {...register('postalCode', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('postalCode')}
           ></input>
-          {formState.errors.postalCode ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.postalCode.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>
         <CustomDiv dir={'column'} w={'250px'} gap={'var(--rtc-gap-xs)'}>
           <Label>Ciudad</Label>
@@ -268,25 +192,8 @@ const FormProfile = () => {
             id='city'
             type='text'
             placeholder='Ciudad'
-            {...register('city', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('city')}
           ></input>
-          {formState.errors.city ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.city.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>
         <CustomDiv dir={'column'} w={'250px'} gap={'var(--rtc-gap-xs)'}>
           <Label>Provincia</Label>
@@ -295,25 +202,8 @@ const FormProfile = () => {
             id='province'
             type='text'
             placeholder='Provincia'
-            {...register('province', {
-              required: {
-                value: true,
-                message: 'Obligatorio'
-              }
-            })}
+            {...register('province')}
           ></input>
-          {formState.errors.province ? (
-            <CustomDiv jc={'flex-start'} padding={'0 var(--rtc-padding-s)'}>
-              <Paragraph
-                color={'var(--rtc-color-error)'}
-                fontweight={'bold'}
-                textalign={'center'}
-                textshadow={'var(--rtc-textShadow)'}
-              >
-                {formState.errors.province.message}
-              </Paragraph>
-            </CustomDiv>
-          ) : null}
         </CustomDiv>
       </CustomDiv>
       <Button type={'submit'}>{btnName}</Button>

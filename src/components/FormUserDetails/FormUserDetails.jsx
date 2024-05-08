@@ -40,7 +40,9 @@ const FormUserDetails = () => {
   }, [])
 
   const getuserDetails = async () => {
-    const res = await getUserDetailsPurchase(localStorage.getItem('id'))
+    const res = await getUserDetailsPurchase(
+      localStorage.getItem('id_pr13Jroa')
+    )
     setValue('name', res.user.name)
     setValue('lastname', res.user.lastName1)
     setValue('lastname2', res.user.lastName2)
@@ -56,7 +58,7 @@ const FormUserDetails = () => {
   }
 
   const onSubmit = async (values) => {
-    const res = await purchase(localStorage.getItem('id'), values)
+    const res = await purchase(localStorage.getItem('id_pr13Jroa'), values)
     if (res.status === 200) {
       setMsg(res.msg)
       setNumCart(0)

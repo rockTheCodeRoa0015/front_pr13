@@ -58,7 +58,7 @@ export const getBookByPerosnalId = async (id) => {
   const data = await fetch(path + '/api/v1/books/getByPersonalId/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'GET'
   })
@@ -71,7 +71,7 @@ export const setStock = async (id, num) => {
   const data = await fetch(path + '/api/v1/books/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'PUT',
     body: JSON.stringify({

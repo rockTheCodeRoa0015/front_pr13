@@ -8,11 +8,11 @@ const postCart = async (book, num) => {
   const data = await fetch(path + '/api/v1/carts', {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'POST',
     body: JSON.stringify({
-      user: localStorage.getItem('id'),
+      user: localStorage.getItem('id_pr13Jroa'),
       book: book.id,
       numCopies: num,
       price: book.price
@@ -27,7 +27,7 @@ const putCart = async (num, id) => {
   const data = await fetch(path + '/api/v1/carts/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'PUT',
     body: JSON.stringify({
@@ -43,11 +43,11 @@ const getCartByUserAndBook = async (book) => {
   const data = await fetch(path + '/api/v1/carts/getCartUserAndBook', {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'POST',
     body: JSON.stringify({
-      user: localStorage.getItem('id'),
+      user: localStorage.getItem('id_pr13Jroa'),
       book: book.id
     })
   })
@@ -80,7 +80,7 @@ export const getCartBooks = async (id) => {
   const data = await fetch(path + '/api/v1/carts/getByUser/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'GET'
   })
@@ -126,7 +126,7 @@ export const delCart = async (id) => {
   const data = await fetch(path + '/api/v1/carts/' + id, {
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
     },
     method: 'DELETE'
   })

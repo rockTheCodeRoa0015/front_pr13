@@ -17,7 +17,11 @@ const Basket = () => {
   const { numCart } = useContext(NumCartContext)
 
   useEffect(() => {
-    getDetailCart(localStorage.getItem('id'), setCartBooks, setSumTotal)
+    getDetailCart(
+      localStorage.getItem('id_pr13Jroa'),
+      setCartBooks,
+      setSumTotal
+    )
   }, [delItem, numCart])
 
   return (

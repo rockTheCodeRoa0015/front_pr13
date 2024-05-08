@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
+import { checkLocalStorage } from '../api/userApi'
 
 export const LoginContext = createContext()
 
@@ -6,7 +7,10 @@ const LoginProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false)
 
   useEffect(() => {
-    if (localStorage.getItem('id')) setIsLogin(true)
+    if (localStorage.getItem('id_pr13Jroa')) {
+      checkLocalStorage(localStorage.getItem('id_pr13Jroa'), setIsLogin)
+      //setIsLogin(true)
+    }
   }, [])
 
   const logoned = () => {
