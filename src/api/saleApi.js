@@ -59,7 +59,8 @@ export const getDetailsSalesbyUserId = async (
   id,
   setSalesBooks,
   page,
-  setLastPage
+  setLastPage,
+  setLoading
 ) => {
   const arrBooks = []
   var opciones = { year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -81,4 +82,5 @@ export const getDetailsSalesbyUserId = async (
   }
   setLastPage(resSales.metadata.totalPage)
   setSalesBooks(arrBooks)
+  setLoading(true)
 }

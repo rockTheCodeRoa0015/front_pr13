@@ -100,7 +100,12 @@ export const getCartByPersonalId = async (id) => {
   return num
 }
 
-export const getDetailCart = async (id, setCartBooks, setSumTotal) => {
+export const getDetailCart = async (
+  id,
+  setCartBooks,
+  setSumTotal,
+  setLoading
+) => {
   const arrBooks = []
   const res = await getCartBooks(id)
   if (res.length !== 0) {
@@ -120,6 +125,7 @@ export const getDetailCart = async (id, setCartBooks, setSumTotal) => {
   }
   setCartBooks(arrBooks)
   sumPrice(arrBooks, setSumTotal)
+  setLoading(true)
 }
 
 export const delCart = async (id) => {

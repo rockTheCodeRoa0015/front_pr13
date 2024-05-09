@@ -11,6 +11,7 @@ import ButtonCart from '../../components/ButtonCart/ButtonCart'
 import ButtonTotal from '../../components/ButtonTotal/ButtonTotal'
 import useAddCart from '../../customHooks/useAddCart'
 import useCustomMsg from '../../customHooks/useCustomMsg'
+import useLoading from '../../customHooks/useLoading'
 
 const BookDetail = () => {
   const { id } = useParams()
@@ -19,14 +20,18 @@ const BookDetail = () => {
   const { num, sumNum, substractNum } = useAddCart(1)
   const { error, setError } = useCustomMsg()
   const { isLogin } = useContext(LoginContext)
+  const { load, setLoading } = useLoading()
 
   useEffect(() => {
-    getBookDetails(id, setBook, setCategorie)
+    setLoading(false)
+    getBookDetails(id, setBook, setCategorie, setLoading)
   }, [])
 
   return (
     <StyledBookDetail>
-      {categorie && (
+      {!load ? (
+        <Image src={'../assets/load.gif'}></Image>
+      ) : (
         <>
           <CustomDiv w={'420px'}>
             <Image

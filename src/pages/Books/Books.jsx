@@ -10,6 +10,8 @@ import Title from '../../components/Title/Title'
 import Select from '../../components/Select/Select'
 import { getCategoriesSelect } from '../../api/categorieApi'
 import useGetCategorie from '../../customHooks/useGetCategorie'
+import useLoading from '../../customHooks/useLoading'
+import Image from '../../components/Image/Image'
 
 const Books = () => {
   const { id } = useParams()
@@ -17,30 +19,55 @@ const Books = () => {
   const [title, setTitle] = useState('Todos los géneros')
   const [categories, setCategories] = useState()
   const { value, setValue } = useGetCategorie()
+  const { load, setLoading } = useLoading()
   const { page, lastPage, setLastPage, sumPage, substractPage, resetPage } =
     usePaginator()
 
   useEffect(() => {
+    setLoading(false)
     resetPage()
     getCategoriesSelect(setCategories)
-    getBooksByCategorie(id, setBooks, page, setLastPage, setTitle, value)
+    getBooksByCategorie(
+      id,
+      setBooks,
+      page,
+      setLastPage,
+      setTitle,
+      value,
+      setLoading
+    )
   }, [id, value])
   useEffect(() => {
-    getBooksByCategorie(id, setBooks, page, setLastPage, setTitle, value)
+    setLoading(false)
+    getBooksByCategorie(
+      id,
+      setBooks,
+      page,
+      setLastPage,
+      setTitle,
+      value,
+      setLoading
+    )
   }, [page])
   return (
     <StyledBooks>
-      <Title>{title}</Title>
       {id === 'all' ? (
         <Select list={categories} setValue={setValue}></Select>
       ) : null}
+      <Title>{title}</Title>
+      {!load ? (
+        <Image src={'../assets/load.gif'}></Image>
+      ) : (
+        <>
+          <CustomDiv wrap={'wrap'} w={'80%'}>
+            {books &&
+              books.map((book, index) => (
+                <ArticleBook key={index} Book={book}></ArticleBook>
+              ))}
+          </CustomDiv>
+        </>
+      )}
 
-      <CustomDiv wrap={'wrap'} w={'80%'}>
-        {books &&
-          books.map((book, index) => (
-            <ArticleBook key={index} Book={book}></ArticleBook>
-          ))}
-      </CustomDiv>
       <Paginator
         add={sumPage}
         substract={substractPage}

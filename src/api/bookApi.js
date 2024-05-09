@@ -14,7 +14,7 @@ export const getTopSales = async (setTopBooks) => {
   setTopBooks(res)
 }
 
-export const getLastAdd = async (setLastAddBooks) => {
+export const getLastAdd = async (setLastAddBooks, setLoading) => {
   const data = await fetch(path + '/api/v1/books/getLastAdd', {
     headers: {
       'Content-Type': 'application/json'
@@ -25,9 +25,10 @@ export const getLastAdd = async (setLastAddBooks) => {
   const res = await data.json()
 
   setLastAddBooks(res)
+  setLoading(true)
 }
 
-export const getBookDetails = async (id, setBook, setCategorie) => {
+export const getBookDetails = async (id, setBook, setCategorie, setLoading) => {
   const data = await fetch(path + '/api/v1/books/' + id, {
     headers: {
       'Content-Type': 'application/json'
@@ -52,6 +53,7 @@ export const getBookDetails = async (id, setBook, setCategorie) => {
   const resCat = await dataCat.json()
 
   setCategorie(resCat[0])
+  setLoading(true)
 }
 
 export const getBookByPerosnalId = async (id) => {
@@ -89,7 +91,8 @@ export const getBooksByCategorie = async (
   page,
   setLastPage,
   setTitle,
-  value
+  value,
+  setLoading
 ) => {
   const categoire = value !== '' ? value : cat
   const infoCat = getParamsCategories(categoire)
@@ -107,9 +110,16 @@ export const getBooksByCategorie = async (
   setLastPage(res.metadata.totalPage)
   setTitle(infoCat.title)
   setBooks(res.data)
+  setLoading(true)
 }
 
-export const getBooksByTitle = async (title, setBooks, page, setLastPage) => {
+export const getBooksByTitle = async (
+  title,
+  setBooks,
+  page,
+  setLastPage,
+  setLoading
+) => {
   const upTitle = title.toUpperCase()
   const data = await fetch(
     `${path}/api/v1/books/getByTitle?title=${upTitle}&page=${page}&limit=10`,
@@ -124,4 +134,5 @@ export const getBooksByTitle = async (title, setBooks, page, setLastPage) => {
   const res = await data.json()
   setLastPage(res.metadata.totalPage)
   setBooks(res.data)
+  setLoading(true)
 }
