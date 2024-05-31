@@ -21,7 +21,7 @@ const Basket = () => {
   useEffect(() => {
     setLoading(false)
     getDetailCart(
-      localStorage.getItem('id_pr13Jroa'),
+      localStorage.getItem('_id_pr13Jroa'),
       setCartBooks,
       setSumTotal,
       setLoading
@@ -79,7 +79,7 @@ const Basket = () => {
                 <CartFunctions
                   numBooks={book.quantity}
                   idBook={book.id}
-                  personalId={book.personalId}
+                  personalId={book.bookId}
                   w={'20%'}
                   h={'100%'}
                   gap={'var(--rtc-gap-xxs)'}

@@ -16,7 +16,6 @@ import useLoading from '../../customHooks/useLoading'
 const BookDetail = () => {
   const { id } = useParams()
   const [book, setBook] = useState()
-  const [categorie, setCategorie] = useState()
   const { num, sumNum, substractNum } = useAddCart(1)
   const { error, setError } = useCustomMsg()
   const { isLogin } = useContext(LoginContext)
@@ -24,7 +23,7 @@ const BookDetail = () => {
 
   useEffect(() => {
     setLoading(false)
-    getBookDetails(id, setBook, setCategorie, setLoading)
+    getBookDetails(id, setBook, setLoading)
   }, [])
 
   return (
@@ -54,8 +53,9 @@ const BookDetail = () => {
               bg={'var(--rtc-background-green)'}
               radius={'var(--rtc-border-radius-button)'}
               color={'var(--rtc-color-white)'}
+              bgh={'var(--rtc-background-green)'}
             >
-              {categorie.categorie}
+              {book.categories.categorie}
             </Paragraph>
             <Paragraph>{book.price} €</Paragraph>
             <Paragraph>{book.synopsis}</Paragraph>
@@ -71,6 +71,11 @@ const BookDetail = () => {
                 book.stock !== 0
                   ? 'var(--rtc-color-white)'
                   : 'var(--rtc-color-black)'
+              }
+              bgh={
+                book.stock !== 0
+                  ? 'var(--rtc-background-green)'
+                  : 'var(--rtc-color-grey)'
               }
             >
               stock

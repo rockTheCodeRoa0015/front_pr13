@@ -5,8 +5,8 @@ import Paragraph from '../Paragraph/Paragraph'
 import Label from '../Label/Label'
 import Button from '../Button/Button'
 import useCustomMsg from '../../customHooks/useCustomMsg'
-import { useEffect, useState } from 'react'
-import { ModifyUserData, getUserDetailsPurchase } from '../../api/userApi'
+import { useEffect } from 'react'
+import { ModifyUserData, getUserId } from '../../api/userApi'
 import useEditProfile from '../../customHooks/useEditProfile'
 
 const FormProfile = () => {
@@ -34,24 +34,22 @@ const FormProfile = () => {
   }, [])
 
   const getuserDetails = async () => {
-    const res = await getUserDetailsPurchase(
-      localStorage.getItem('id_pr13Jroa')
-    )
-    if (res.user.name) {
-      setValue('name', res.user.name)
+    const user = await getUserId(localStorage.getItem('_id_pr13Jroa'))
+    if (user.name) {
+      setValue('name', user.name)
     } else {
-      setValue('name', res.user.userName)
+      setValue('name', user.userName)
     }
-    setValue('lastname', res.user.lastName1)
-    setValue('lastname2', res.user.lastName2)
-    setValue('telephone', res.user.telephone)
-    setValue('street', res.user.street)
-    setValue('number', res.user.number)
-    setValue('floor', res.user.floor)
-    setValue('door', res.user.door)
-    setValue('postalCode', res.user.postalCode)
-    setValue('city', res.user.city)
-    setValue('province', res.user.province)
+    setValue('lastname', user.lastName1)
+    setValue('lastname2', user.lastName2)
+    setValue('telephone', user.telephone)
+    setValue('street', user.street)
+    setValue('number', user.number)
+    setValue('floor', user.floor)
+    setValue('door', user.door)
+    setValue('postalCode', user.postalCode)
+    setValue('city', user.city)
+    setValue('province', user.province)
   }
 
   const onSubmit = async (values) => {
@@ -59,7 +57,7 @@ const FormProfile = () => {
     mofifyBtnName()
     if (!edit) {
       const res = await ModifyUserData(
-        localStorage.getItem('id_pr13Jroa'),
+        localStorage.getItem('_id_pr13Jroa'),
         values
       )
       if (res.status === 200) {

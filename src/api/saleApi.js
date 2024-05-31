@@ -1,6 +1,5 @@
 import { path } from '../constants/pathBackend'
 import { getCurrentDate } from '../utils/getDate'
-import { getBookByPerosnalId } from './bookApi'
 
 export const getNextSale = async () => {
   const data = await fetch(path + '/api/v1/sales/getNextSale', {
@@ -25,8 +24,8 @@ export const postSale = async (id, cart, pay) => {
     method: 'POST',
     body: JSON.stringify({
       id: id,
-      user: cart.user,
-      book: cart.book,
+      users: cart.users,
+      books: cart.books,
       price: cart.price,
       numCopies: cart.numCopies,
       date: currentDate,
@@ -67,11 +66,10 @@ export const getDetailsSalesbyUserId = async (
   const resSales = await getSaleByUser(id, page)
   if (resSales.metadata.count !== 0) {
     for (const sale of resSales.data) {
-      const bookRes = await getBookByPerosnalId(sale.book)
       const obBook = {
         id: sale._id,
-        title: bookRes.title,
-        cover: bookRes.cover,
+        title: sale.books.title,
+        cover: sale.books.cover,
         price: sale.price * sale.numCopies,
         quantity: sale.numCopies,
         state: sale.state,

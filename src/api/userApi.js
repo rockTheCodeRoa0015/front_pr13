@@ -88,8 +88,8 @@ const getByUserNameAndMail = async (userName, email) => {
   return res
 }
 
-export const getUserByUserId = async (id) => {
-  const data = await fetch(path + '/api/v1/users/byUserId/' + id, {
+export const getUserId = async (id) => {
+  const data = await fetch(path + '/api/v1/users/' + id, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
@@ -98,11 +98,11 @@ export const getUserByUserId = async (id) => {
   })
 
   const res = await data.json()
-  return res[0]
+  return res
 }
 
 export const getUserDetailsPurchase = async (id) => {
-  const resUser = await getUserByUserId(id)
+  const resUser = await getUserId(id)
   const resCart = await getCartBooks(id)
   let sumPrice = 0
   for (const cart of resCart) {
@@ -142,8 +142,7 @@ export const putUserData = async (id, values) => {
 }
 
 export const ModifyUserData = async (id, values) => {
-  const resUser = await getUserByUserId(id)
-  const restPutUser = await putUserData(resUser._id, values)
+  const restPutUser = await putUserData(id, values)
   if (!restPutUser.mensaje) {
     return { msg: 'Error al Modificar los datos del usuario', status: 400 }
   }
@@ -151,10 +150,9 @@ export const ModifyUserData = async (id, values) => {
 }
 
 export const checkLocalStorage = async (id, setIsLogin) => {
-  const resUser = await getUserByUserId(id)
+  const resUser = await getUserId(id)
 
   if (resUser.id) {
-    console.log(resUser.id)
     setIsLogin(true)
   } else {
     clearLocalStorage()

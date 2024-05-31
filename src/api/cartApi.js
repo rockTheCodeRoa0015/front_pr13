@@ -2,7 +2,7 @@ import { path } from '../constants/pathBackend'
 import { sumPrice } from '../utils/sumPrices'
 import { getBookByPerosnalId, setStock } from './bookApi'
 import { getNextSale, postSale } from './saleApi'
-import { getUserByUserId, putUserData } from './userApi'
+import { putUserData } from './userApi'
 
 const postCart = async (book, num) => {
   const data = await fetch(path + '/api/v1/carts', {
@@ -12,8 +12,8 @@ const postCart = async (book, num) => {
     },
     method: 'POST',
     body: JSON.stringify({
-      user: localStorage.getItem('id_pr13Jroa'),
-      book: book.id,
+      users: localStorage.getItem('_id_pr13Jroa'),
+      books: book._id,
       numCopies: num,
       price: book.price
     })
@@ -47,8 +47,8 @@ const getCartByUserAndBook = async (book) => {
     },
     method: 'POST',
     body: JSON.stringify({
-      user: localStorage.getItem('id_pr13Jroa'),
-      book: book.id
+      user: localStorage.getItem('_id_pr13Jroa'),
+      book: book._id
     })
   })
 
@@ -58,7 +58,7 @@ const getCartByUserAndBook = async (book) => {
 
 export const addBooksCart = async (book, num) => {
   const resGetCart = await getCartByUserAndBook(book)
-  const resBook = await getBookByPerosnalId(book.id)
+  const resBook = await getBookByPerosnalId(book._id)
 
   if (parseInt(resBook.stock) < num) {
     return { error: `Solo quedan ${resBook.stock} de stock` }
@@ -92,11 +92,14 @@ export const getCartBooks = async (id) => {
 export const getCartByPersonalId = async (id) => {
   const res = await getCartBooks(id)
   let num = 0
-  if (res.length !== 0) {
-    for (const cart of res) {
-      num += parseInt(cart.numCopies)
+  if (res !== null) {
+    if (res.length !== 0) {
+      for (const cart of res) {
+        num += parseInt(cart.numCopies)
+      }
     }
   }
+
   return num
 }
 
@@ -108,17 +111,16 @@ export const getDetailCart = async (
 ) => {
   const arrBooks = []
   const res = await getCartBooks(id)
-  if (res.length !== 0) {
+  if (res !== null) {
     for (const cart of res) {
-      const bookRes = await getBookByPerosnalId(cart.book)
       const obBook = {
         id: cart._id,
-        personalId: cart.book,
-        title: bookRes.title,
-        cover: bookRes.cover,
-        price: bookRes.price,
+        bookId: cart.books._id,
+        title: cart.books.title,
+        cover: cart.books.cover,
+        price: cart.books.price,
         quantity: cart.numCopies,
-        stock: bookRes.stock
+        stock: cart.books.stock
       }
       arrBooks.push(obBook)
     }
@@ -162,7 +164,7 @@ export const addRemoveCartBooks = async (action, id, num, personalId) => {
 
 const checkStock = async (arrCart) => {
   for (const cart of arrCart) {
-    const resBook = await getBookByPerosnalId(cart.book)
+    const resBook = await getBookByPerosnalId(cart.books._id)
     if (parseInt(resBook.stock) < parseInt(cart.numCopies)) {
       return `No hay suficiente stock de ${resBook.title}, quedan ${resBook.stock}`
     }
@@ -170,8 +172,7 @@ const checkStock = async (arrCart) => {
 }
 
 export const purchase = async (id, values) => {
-  const resUser = await getUserByUserId(id)
-  const restPutUser = await putUserData(resUser._id, values)
+  const restPutUser = await putUserData(id, values)
   if (!restPutUser.mensaje) {
     return { msg: 'Error al Modificar los datos del usuario', status: 400 }
   }
@@ -181,7 +182,7 @@ export const purchase = async (id, values) => {
   if (resCheck) return { msg: resCheck, status: 400 }
 
   for (const cart of resCart) {
-    const resBook = await getBookByPerosnalId(cart.book)
+    const resBook = await getBookByPerosnalId(cart.books._id)
     const resStock = await setStock(
       resBook._id,
       parseInt(resBook.stock) - parseInt(cart.numCopies)

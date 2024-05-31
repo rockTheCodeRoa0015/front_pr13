@@ -18,7 +18,7 @@ const Sales = () => {
   useEffect(() => {
     setLoading(false)
     getDetailsSalesbyUserId(
-      localStorage.getItem('id_pr13Jroa'),
+      localStorage.getItem('_id_pr13Jroa'),
       setSalesBooks,
       page,
       setLastPage,

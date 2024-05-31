@@ -32,7 +32,7 @@ const FormLogin = () => {
     if (res.user) {
       saveLoginData(res)
       logoned()
-      const num = await getCartByPersonalId(res.user.id)
+      const num = await getCartByPersonalId(res.user._id)
       if (num !== 0) {
         setNumCart(num)
       }

@@ -19,6 +19,7 @@ import Purchase from './pages/Purchase/Purchase'
 import SearchBook from './pages/SearchBook/SearchBook'
 import Sales from './pages/Sales/Sales'
 import Footer from './components/Footer/Footer'
+import ProtectedRoute from './utils/ProtectedRoute'
 
 const App = () => {
   return (
@@ -37,10 +38,12 @@ const App = () => {
               <Route path='/books/:id' element={<Books />}></Route>
               <Route path='/bookDetail/:id' element={<BookDetail />}></Route>
               <Route path='/search/:search' element={<SearchBook />}></Route>
-              <Route path='/profile' element={<Profile />}></Route>
-              <Route path='/sales' element={<Sales />}></Route>
-              <Route path='/basket' element={<Basket />}></Route>
-              <Route path='/purchase' element={<Purchase />}></Route>
+              <Route element={<ProtectedRoute />}>
+                <Route path='/profile' element={<Profile />}></Route>
+                <Route path='/sales' element={<Sales />}></Route>
+                <Route path='/purchase' element={<Purchase />}></Route>
+                <Route path='/basket' element={<Basket />}></Route>
+              </Route>
               <Route path='/login' element={<Login />}></Route>
               <Route path='/register' element={<Register />}></Route>
               <Route path='/renewPass' element={<RenewPass />}></Route>

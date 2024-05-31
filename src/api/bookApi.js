@@ -28,7 +28,7 @@ export const getLastAdd = async (setLastAddBooks, setLoading) => {
   setLoading(true)
 }
 
-export const getBookDetails = async (id, setBook, setCategorie, setLoading) => {
+export const getBookDetails = async (id, setBook, setLoading) => {
   const data = await fetch(path + '/api/v1/books/' + id, {
     headers: {
       'Content-Type': 'application/json'
@@ -37,27 +37,12 @@ export const getBookDetails = async (id, setBook, setCategorie, setLoading) => {
   })
 
   const res = await data.json()
-
   setBook(res)
-
-  const dataCat = await fetch(
-    path + '/api/v1/categories/personalId/' + res.categories,
-    {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'GET'
-    }
-  )
-
-  const resCat = await dataCat.json()
-
-  setCategorie(resCat[0])
   setLoading(true)
 }
 
 export const getBookByPerosnalId = async (id) => {
-  const data = await fetch(path + '/api/v1/books/getByPersonalId/' + id, {
+  const data = await fetch(path + '/api/v1/books/' + id, {
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${localStorage.getItem('token_pr13Jroa')}`
@@ -66,7 +51,7 @@ export const getBookByPerosnalId = async (id) => {
   })
 
   const res = await data.json()
-  return res[0]
+  return res
 }
 
 export const setStock = async (id, num) => {

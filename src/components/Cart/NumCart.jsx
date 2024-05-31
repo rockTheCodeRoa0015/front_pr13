@@ -7,13 +7,13 @@ const NumCart = () => {
   const { numCart, setNumCart } = useContext(NumCartContext)
 
   useEffect(() => {
-    if (localStorage.getItem('id_pr13Jroa')) {
+    if (localStorage.getItem('_id_pr13Jroa')) {
       setCartNum()
     }
   }, [])
 
   const setCartNum = async () => {
-    const num = await getCartByPersonalId(localStorage.getItem('id_pr13Jroa'))
+    const num = await getCartByPersonalId(localStorage.getItem('_id_pr13Jroa'))
     if (!isNaN(num)) {
       if (num !== 0) {
         setNumCart(num)
