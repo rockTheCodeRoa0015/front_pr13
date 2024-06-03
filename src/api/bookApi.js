@@ -77,9 +77,18 @@ export const getBooksByCategorie = async (
   setLastPage,
   setTitle,
   value,
-  setLoading
+  setLoading,
+  setValue
 ) => {
-  const categoire = value !== '' ? value : cat
+  //const categoire = value !== '' ? value : cat
+  let categoire = ''
+  if (cat === 'manga' || cat === 'infantil') {
+    categoire = cat
+    setValue('all')
+  } else {
+    categoire = value
+  }
+
   const infoCat = getParamsCategories(categoire)
   const data = await fetch(
     `${path}/api/v1/books/getByCategorie?categorie=${infoCat.id}&page=${page}&limit=10`,

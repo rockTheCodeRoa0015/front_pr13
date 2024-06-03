@@ -34,7 +34,8 @@ const Books = () => {
       setLastPage,
       setTitle,
       value,
-      setLoading
+      setLoading,
+      setValue
     )
   }, [id, value])
   useEffect(() => {
@@ -46,7 +47,8 @@ const Books = () => {
       setLastPage,
       setTitle,
       value,
-      setLoading
+      setLoading,
+      setValue
     )
   }, [page])
   return (
